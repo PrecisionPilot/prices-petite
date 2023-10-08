@@ -13,7 +13,7 @@ def search_web_prices(user_query):
     soup = BeautifulSoup(web_page.content, "lxml")
     item_list = soup.findAll("li", attrs={'class': 'br-item'})
 
-    dictionary = {"url_list": [], "price_list": [], "product_name_list": []}
+    dictionary = {"Vendor": [], "Price": [], "Description": []}
 
     for item in item_list:
         vendor = item.find("span", attrs={'class': 'br-sellersCite'})
@@ -21,9 +21,9 @@ def search_web_prices(user_query):
         description = item.find('div', attrs={'class','br-pdItemName'})
 
         if (not vendor is None) and (not price is None) and (not description is None):
-            dictionary["url_list"].append(vendor.getText())
-            dictionary["price_list"].append(price.getText())
-            dictionary["product_name_list"].append(description.getText())
+            dictionary["Vendor"].append(vendor.getText())
+            dictionary["Price"].append(price.getText())
+            dictionary["Description"].append(description.getText())
 
 #        dictionary["url_list"].append()
 #        dictionary["price_list"].append(str(item.find("div", attrs={'class': 'pd-price br-standardPrice promoted'}).getText()))
@@ -31,9 +31,9 @@ def search_web_prices(user_query):
 
     df = pd.DataFrame().from_dict(dictionary)
     df = df.dropna()
-    df = df.astype({"url_list": "string"})
-    df = df.astype({"price_list": "string"})
-    df = df.astype({"product_name_list": "string"})
+    df = df.astype({"Vendor": "string"})
+    df = df.astype({"Price": "string"})
+    df = df.astype({"Description": "string"})
     return df
 
 

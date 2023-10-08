@@ -4,9 +4,7 @@ import scraping_test
 
 user_query = ""
 display_search_results = False
-#data = {'col_1': [3, 2, 1, 0], 'col_2': ['a', 'b', 'c', 'd']}
-data = {"url_list": [], "price_list": [], "product_name_list": []}
-#data2 = {'col_1': [24, 26, 331, 460], 'col_2': ['thtfgf', 'dfdgfhfh', 'sdsdsd', 'cvghytdf']}
+data = {"Vendor": [], "Price": [], "Description": []}
 dataframe = pd.DataFrame.from_dict(data)
 
 
@@ -27,11 +25,12 @@ page = """
 
 
 def on_button_action(state):
-    new_dataframe = scraping_test.search_web_prices("broom stick")
-    print(new_dataframe)
-    print(new_dataframe.dtypes)
-    state.dataframe = new_dataframe
-    state.display_search_results = not state.display_search_results
+    if state.user_query != "":
+        new_dataframe = scraping_test.search_web_prices(state.user_query)
+        print(new_dataframe)
+        print(new_dataframe.dtypes)
+        state.dataframe = new_dataframe
+        state.display_search_results = True
 
 
 
