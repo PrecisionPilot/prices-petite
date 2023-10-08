@@ -3,7 +3,7 @@ import webbrowser
 from taipy.gui import Gui
 import pandas as pd
 from webscrapper import search_web_prices
-#from python import capture
+from python import capture
 
 user_query = ""
 display_search_results = False
@@ -20,7 +20,6 @@ Enter any product:
 
 <|{user_query}|input|>
 <|Search|button|on_action=on_button_action|>
-
 <|Open Camera|button|on_action=on_capture_button|>
 
 <|part|render={display_search_results}|
@@ -39,7 +38,7 @@ def on_button_action(state):
         state.display_search_results = True
 
 def on_capture_button(state):
-#    state.user_query = capture()
+    state.user_query = capture()
     on_button_action(state)
 
 def update_dataframe(state):
@@ -65,5 +64,4 @@ stylekit = {
     "color_secondary": "#746D75",
 }
 
-Gui(page).run(stylekit=stylekit)
-
+Gui(page, css_file="styles.css").run(stylekit=stylekit)

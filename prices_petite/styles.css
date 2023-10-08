@@ -1,0 +1,14 @@
+.taipy-button,
+.taipy-input {
+    margin-right: 10px;
+    margin-bottom: 20px;
+}
+
+.taipy-toggle {
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+
+.taipy-table {
+    /* height: 500px */
+}
