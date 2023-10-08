@@ -1,7 +1,7 @@
 from google.oauth2.service_account import Credentials
 
 # Specify the path to the service account key file
-key_path = 'Auth/Google Cloud.json'
+key_path = 'Auth/creds.json'
 
 # Create a credentials object
 creds = Credentials.from_service_account_file(key_path)
