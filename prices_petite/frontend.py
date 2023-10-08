@@ -10,15 +10,11 @@ dataframe = pd.DataFrame.from_dict(data)
 
 page = """
 
-<|layout|columns=1 1|
-<|
 <|{user_query}|input|>
 <|Search|button|on_action=on_button_action|>
 
 <|part|render={display_search_results}|
 <|{dataframe}|table|>
-|>
-
 |>
 
 """
@@ -27,12 +23,8 @@ page = """
 def on_button_action(state):
     if state.user_query != "":
         new_dataframe = webscrapper .search_web_prices(state.user_query)
-        print(new_dataframe)
-        print(new_dataframe.dtypes)
         state.dataframe = new_dataframe
         state.display_search_results = True
-
-
 
 def on_change(state, var_name, var_value):
     if var_name == "text" and var_value == "Reset":
