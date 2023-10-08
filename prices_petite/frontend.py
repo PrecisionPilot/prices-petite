@@ -1,6 +1,6 @@
 from taipy.gui import Gui
 import pandas as pd
-import scraping_test
+import webscrapper
 
 user_query = ""
 display_search_results = False
@@ -26,7 +26,7 @@ page = """
 
 def on_button_action(state):
     if state.user_query != "":
-        new_dataframe = scraping_test.search_web_prices(state.user_query)
+        new_dataframe = webscrapper .search_web_prices(state.user_query)
         print(new_dataframe)
         print(new_dataframe.dtypes)
         state.dataframe = new_dataframe
