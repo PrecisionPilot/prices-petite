@@ -30,3 +30,6 @@ def capture():
     cv2.destroyWindow("preview")
 
     return keyword
+
+if __name__ == "__main__":
+    print(capture())
