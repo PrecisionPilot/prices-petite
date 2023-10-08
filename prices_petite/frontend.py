@@ -10,7 +10,7 @@ display_search_results = False
 data = {"Vendor": [], "Price": [], "Description": [], "Url": []}
 dataframe = pd.DataFrame.from_dict(data)
 original_dataframe = dataframe
-vendor_toggle_options = ["Show All", "Amazon CA", "Etsy", "Walmart", "Ebay", "AliExpress", "Other"]
+vendor_toggle_options = ["Show All", "Amazon CA", "Etsy", "Walmart", "eBay CA", "AliExpress", "IKEA", "Other"]
 selected_vendor = vendor_toggle_options[0]
 page = """
 
@@ -23,7 +23,7 @@ Enter any product:
 <|Open Camera|button|on_action=on_capture_button|>
 
 <|part|render={display_search_results}|
-<|{dataframe}|table|>
+<|{dataframe}|height=55vh|table|>
 <|{selected_vendor}|on_change=update_dataframe|toggle|lov={vendor_toggle_options}|>
 |>
 
@@ -45,7 +45,7 @@ def update_dataframe(state):
     state.dataframe = state.original_dataframe
     if state.selected_vendor == state.vendor_toggle_options[len(state.vendor_toggle_options) - 1]:
         for vendor in state.vendor_toggle_options:
-            state.dataframe = state.dataframe.drop(state.dataframe[vendor in state.dataframe["Vendor"]].index)
+            state.dataframe = state.dataframe.drop(state.dataframe[state.dataframe["Vendor"].isin([vendor])].index)
     elif state.selected_vendor != state.vendor_toggle_options[0]:
         state.dataframe = state.dataframe.drop(state.dataframe[~state.dataframe["Vendor"].isin([state.selected_vendor])].index)
 
