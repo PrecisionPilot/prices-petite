@@ -3,35 +3,40 @@ import requests
 import pandas as pd
 import lxml
 
-#the query is whatever the user wants to search for
-query = "broom sticks".replace(" ", "+")
-
-#you have to do this for every computer
 HEADERS = ({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36', 'Accept-Language': 'en-US, en;q=0.5'})
+BASE_URL = "https://www.bing.com/shop?q="
+QUERY_PARAMETERS = "&FORM=SHOPTB&SortBy=Price&IsAscending=True"
+def search_web_prices(user_query):
+    user_query = user_query.replace(" ", "+")
+    item_page_url = BASE_URL + user_query + QUERY_PARAMETERS
+    web_page = requests.get(item_page_url, headers=HEADERS)
+    soup = BeautifulSoup(web_page.content, "lxml")
+    item_list = soup.findAll("li", attrs={'class': 'br-item'})
 
-#this is the shopping page implemted in Bing that shows specifically the query item from low to high price automatically
-item_page_url = "https://www.bing.com/shop?q=" + query + "&FORM=SHOPTB&SortBy=Price&IsAscending=True"
+    dictionary = {"url_list": [], "price_list": [], "product_name_list": []}
 
-#getting info from the shopping page
-page = requests.get(item_page_url, headers=HEADERS)
-soup = BeautifulSoup(page.content, "lxml")
+    for item in item_list:
+        vendor = item.find("span", attrs={'class': 'br-sellersCite'})
+        price = item.find("div", attrs={'class': 'pd-price br-standardPrice promoted'})
+        description = item.find('div', attrs={'class','br-pdItemName'})
 
-#creates a list, tracking all items
-item_list = soup.findAll("li", attrs={'class': 'br-item'})
+        if (not vendor is None) and (not price is None) and (not description is None):
+            dictionary["url_list"].append(vendor.getText())
+            dictionary["price_list"].append(price.getText())
+            dictionary["product_name_list"].append(description.getText())
 
-dict = {"url_list":["asd"], "price_list":["asdf"], "product_name_list":["asdf"]}
+#        dictionary["url_list"].append()
+#        dictionary["price_list"].append(str(item.find("div", attrs={'class': 'pd-price br-standardPrice promoted'}).getText()))
+#        dictionary["product_name_list"].append(str(item.find('div', attrs={'class','br-pdItemName'}).getText()))
 
-for item in item_list:
-
-        dict["url_list"].append(item.find("span", attrs={'class': 'br-sellersCite'}).getText())
-        dict["price_list"].append(item.find("div", attrs={'class': 'pd-price br-standardPrice promoted'}))
-        dict["product_name_list"].append(item.find('div', attrs={'class','br-pdItemName'}).getText())
-
-print(dict)
-
-df = pd.DataFrame(dict)
-
-print(df)
-
+    df = pd.DataFrame().from_dict(dictionary)
+    df = df.dropna()
+    df = df.astype({"url_list": "string"})
+    df = df.astype({"price_list": "string"})
+    df = df.astype({"product_name_list": "string"})
+    return df
 
 
+new_dataframe = search_web_prices("broom stick")
+print(new_dataframe)
+print(new_dataframe.dtypes)
