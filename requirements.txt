@@ -2,3 +2,6 @@ google-auth
 google-cloud
 google-cloud-vision
 opencv-python
+bs4
+lxml
+taipy
