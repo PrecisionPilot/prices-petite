@@ -4,7 +4,7 @@ import scraping_test
 
 user_query = ""
 display_search_results = False
-data = {"Vendor": [], "Price": [], "Description": []}
+data = {"Vendor": [], "Price": [], "Description": [], "Url": []}
 dataframe = pd.DataFrame.from_dict(data)
 
 
