@@ -1,0 +1,4 @@
+google-auth
+google-cloud
+google-cloud-vision
+opencv-python

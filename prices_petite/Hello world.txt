@@ -1,1 +1,0 @@
-<WSGIRequest: GET '/members/details/1'> 1
