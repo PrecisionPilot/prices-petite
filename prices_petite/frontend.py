@@ -10,6 +10,10 @@ dataframe = pd.DataFrame.from_dict(data)
 
 page = """
 
+# Prices Petite
+
+Enter any product:
+
 <|{user_query}|input|>
 <|Search|button|on_action=on_button_action|>
 
