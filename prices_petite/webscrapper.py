@@ -6,6 +6,7 @@ import lxml
 HEADERS = ({'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.157 Safari/537.36', 'Accept-Language': 'en-US, en;q=0.5'})
 BASE_URL = "https://www.bing.com/shop?q="
 QUERY_PARAMETERS = "&FORM=SHOPTB&SortBy=Price&IsAscending=True"
+
 def search_web_prices(user_query):
     user_query = user_query.replace(" ", "+")
     item_page_url = BASE_URL + user_query + QUERY_PARAMETERS
@@ -35,15 +36,3 @@ def search_web_prices(user_query):
     df = df.dropna()
 
     return df
-
-new_dataframe = search_web_prices("broom stick")
-
-with pd.option_context('display.max_rows', None,
-                       'display.max_columns', None,
-                       'display.precision', 3,
-                       ):
-
-
-    print(new_dataframe)
-
-print(len("https://go.microsoft.com/fwlink/?linkid=2207078&clcid=0x409"))
