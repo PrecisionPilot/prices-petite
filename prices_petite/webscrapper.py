@@ -33,10 +33,6 @@ def search_web_prices(user_query):
 
     df = pd.DataFrame().from_dict(dictionary)
     df = df.dropna()
-    df = df.astype({"Vendor": "string"})
-    df = df.astype({"Price": "string"})
-    df = df.astype({"Description": "string"})
-    df = df.astype({"Url": "string"})
 
     return df
 
