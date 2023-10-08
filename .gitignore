@@ -6,3 +6,4 @@ Auth
 .idea/prices-petite.iml
 .idea/vcs.xml
 .idea/workspace.xml
+*.pyc
