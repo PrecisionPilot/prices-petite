@@ -10,7 +10,7 @@ dataframe = pd.DataFrame.from_dict(data)
 
 page = """
 
-# Petite Prices
+# Prices Petite
 
 Enter any product:
 
