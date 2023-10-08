@@ -13,9 +13,12 @@ while rval:
     cv2.imshow("preview", frame)
     rval, frame = vc.read()
     key = cv2.waitKey(20)
-    if key == 13: # return key
+    if key == 13: # return key   --- Capture ---
         cv2.imwrite('capture.jpg', frame)
-        detect_objects("capture.jpg")
+        if "lay's" in detect_text("capture.jpg"):
+            print("Lay's chips")
+        else:
+            print(detect_objects("capture.jpg"))
     elif key == 27: # exit on ESC
         break
 

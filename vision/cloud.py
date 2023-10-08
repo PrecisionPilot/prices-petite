@@ -29,7 +29,15 @@ def detect_objects(path):
     #     for vertex in object_.bounding_poly.normalized_vertices:
     #         print(f" - ({vertex.x}, {vertex.y})")
 
-    print(objects[0].name)
+    # Get list of names
+    # Remove person from list
+
+    obj = [object_.name for object_ in objects]
+    if "Person" in obj:
+        obj.remove("Person")
+    
+    return obj[0]
+    
 
 def detect_text(path):
     """Detects text in the file."""
@@ -44,19 +52,20 @@ def detect_text(path):
 
     response = client.text_detection(image=image)
     texts = response.text_annotations
-    print("Texts:")
 
-    for text in texts:
-        print(f'\n"{text.description}"')
+    # for text in texts:
+        # print(f'\n"{text.description}"')
 
-        vertices = [
-            f"({vertex.x},{vertex.y})" for vertex in text.bounding_poly.vertices
-        ]
+        # vertices = [
+        #     f"({vertex.x},{vertex.y})" for vertex in text.bounding_poly.vertices
+        # ]
 
-        print("bounds: {}".format(",".join(vertices)))
+        # print("bounds: {}".format(",".join(vertices)))
 
     if response.error.message:
         raise Exception(
             "{}\nFor more info on error messages, check: "
             "https://cloud.google.com/apis/design/errors".format(response.error.message)
         )
+
+    return [txt.description.lower() for txt in texts]
